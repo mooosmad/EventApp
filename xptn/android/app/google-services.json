@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "926587729039",
+    "project_id": "eventendo-b41e9",
+    "storage_bucket": "eventendo-b41e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926587729039:android:b6bfc896c42773e67dacfa",
+        "android_client_info": {
+          "package_name": "com.mosmad.xptn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926587729039-0q30ujj9lgcsds0s6pndom3omep3d5mg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mosmad.xptn",
+            "certificate_hash": "56fe370cfb6fe2cb0bc2f4406dcad314f076cbb4"
+          }
+        },
+        {
+          "client_id": "926587729039-5t5thi93s3rn3819eodfjkphhujcdc4n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrmpc_Q_oqdgDZNua7BZHjP4orMwAfaUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926587729039-5t5thi93s3rn3819eodfjkphhujcdc4n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

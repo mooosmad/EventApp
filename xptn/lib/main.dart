@@ -2,12 +2,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:xptn/pages/details.dart';
 import 'package:xptn/pages/home.dart';
+import 'package:xptn/pages/login/welcome.dart';
 import 'package:xptn/widget/fab.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const Welcome());
+}
 
 class MyApp extends StatelessWidget {
-  final String title = 'BottomAppBar With Centered FAB';
+  final String title = 'Eventendo';
 
   const MyApp({Key? key}) : super(key: key);
 
