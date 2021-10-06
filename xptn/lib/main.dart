@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:xptn/pages/details.dart';
-import 'package:xptn/pages/home.dart';
-import 'package:xptn/pages/login/welcome.dart';
-import 'package:xptn/widget/fab.dart';
+import 'package:drefxptn/pages/details.dart';
+import 'package:drefxptn/pages/home.dart';
+import 'package:drefxptn/pages/login/welcome.dart';
+import 'package:drefxptn/widget/fab.dart';
 
 void main() {
   runApp(const Welcome());
