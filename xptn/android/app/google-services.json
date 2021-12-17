@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "365164998489",
+    "project_id": "eventapp-37187",
+    "storage_bucket": "eventapp-37187.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365164998489:android:cc0426d24b6eb305d1e648",
+        "android_client_info": {
+          "package_name": "com.smad.eventendo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365164998489-qtto9232djgakq3ubdsiceqif5cib1kt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7d2ZU-ksYh-LfMyDLMNjhpNv1-jRdGG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365164998489-qtto9232djgakq3ubdsiceqif5cib1kt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
