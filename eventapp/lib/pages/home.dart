@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventapp/common/constant.dart';
+import 'package:eventapp/common/loading.dart';
 import 'package:eventapp/pages/addEvent.dart';
 import 'package:eventapp/services/firestore/evenement.dart';
 import 'package:eventapp/services/firestore/gestionEvent.dart';
@@ -18,18 +19,19 @@ class Pagehome extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class UserInfom {
-  String? email;
-  String? urlPhoto;
-  String? uid;
-  UserInfom({
-    required this.email,
-    required this.urlPhoto,
-    required this.uid,
-  });
-}
-
 class _HomeState extends State<Pagehome> {
+  getColor(String colorEvent) {
+    if (colorEvent == "red") {
+      return Colors.red;
+    } else if (colorEvent == "blue") {
+      return Colors.blue;
+    } else if (colorEvent == "purple") {
+      return Colors.purple;
+    } else {
+      return Colors.teal;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,9 +81,11 @@ class _HomeState extends State<Pagehome> {
                                 physics: BouncingScrollPhysics(),
                                 itemCount: res.length,
                                 itemBuilder: (BuildContext context, index) {
+                                  Color colorEvent =
+                                      getColor(res[index].color!);
                                   return GestureDetector(
                                     onTap: () {
-                                      showMore();
+                                      showMore(res[index]);
                                     },
                                     child: ShaderMask(
                                       shaderCallback: (rect) {
@@ -99,9 +103,45 @@ class _HomeState extends State<Pagehome> {
                                       },
                                       blendMode: BlendMode.dstIn,
                                       child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 10,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            //titre
+                                            Container(
+                                              height: 80,
+                                              child: Text(
+                                                res[index].nom!,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 22,
+                                                ),
+                                              ),
+                                            ),
+                                            //description
+                                            Container(
+                                              height: 130,
+                                              child: Text(
+                                                res[index].description!,
+                                                style: TextStyle(
+                                                  color: Colors.white54,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                         margin: const EdgeInsets.all(8),
-                                        decoration: const BoxDecoration(
-                                          color: Color(0xffffffff),
+                                        decoration: BoxDecoration(
+                                          color: colorEvent,
                                           borderRadius: BorderRadius.vertical(
                                             top: Radius.circular(20.0),
                                             bottom: Radius.circular(20.0),
@@ -115,18 +155,14 @@ class _HomeState extends State<Pagehome> {
                                             ),
                                           ],
                                         ),
-                                        height: 300,
+                                        height: 280,
                                       ),
                                     ),
                                   );
                                 },
                               );
                       } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.teal,
-                          ),
-                        );
+                        return Loading();
                       }
                     },
                   )),
@@ -137,7 +173,7 @@ class _HomeState extends State<Pagehome> {
     );
   }
 
-  showMore() {
+  showMore(Evenement evenement) {
     return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -158,10 +194,10 @@ class _HomeState extends State<Pagehome> {
                 decoration: BoxDecoration(
                   color: Colors.white10,
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  // border: Border.all(
-                  //   color: Colors.black26,
-                  //   width: 0.5,
-                  // ),
+                  border: Border.all(
+                    color: Colors.black26,
+                    width: 0.5,
+                  ),
                 ),
                 child: Column(
                   children: [
@@ -187,9 +223,85 @@ class _HomeState extends State<Pagehome> {
                     Expanded(
                       child: Container(
                         alignment: Alignment.center,
-                        child: const Text(
-                          'Bientôt',
-                          style: TextStyle(fontSize: 25, color: Colors.white),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 20,
+                        ),
+                        child: ListView(
+                          physics: BouncingScrollPhysics(),
+                          children: [
+                            Text(
+                              "Titre :",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              evenement.nom!,
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.8),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              "Description : ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              evenement.nom!,
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.8),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              "Date de début de l'évènement : ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              evenement.dateDebut!,
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.8),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              "Date de fin de l'évènement : ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              evenement.dateFin!,
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.8),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

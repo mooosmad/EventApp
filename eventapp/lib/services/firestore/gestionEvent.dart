@@ -8,12 +8,12 @@ class GestionEvent {
 
   GestionEvent({this.uid});
   CollectionReference eventCollection =
-      FirebaseFirestore.instance.collection("evenements");
+      FirebaseFirestore.instance.collection("Evenements");
 
   addEvent(Evenement evenement) {
     eventCollection
         .doc(uid)
-        .collection("mesevenements")
+        .collection("MesEvenements")
         .doc(
           DateTime.now().millisecondsSinceEpoch.toString(),
         )
@@ -25,11 +25,12 @@ class GestionEvent {
   List<Evenement> listEvent(QuerySnapshot querySnapshot) {
     return querySnapshot.docs.map((doc) {
       return Evenement(
-        // dateDebut: (doc.data() as dynamic)["date debut"],
-        // dateFin: (doc.data() as dynamic)["date fin"],
+        dateDebut: (doc.data() as dynamic)["date debut"],
+        dateFin: (doc.data() as dynamic)["date fin"],
         description: (doc.data() as dynamic)["description"],
         nom: (doc.data() as dynamic)["nomEvenement"],
         urlDescription: (doc.data() as dynamic)["urlDescription"],
+        color: (doc.data() as dynamic)["color"],
       );
     }).toList();
   }
@@ -37,7 +38,7 @@ class GestionEvent {
   Stream<List<Evenement>> getAllMyEvents() {
     return eventCollection
         .doc(uid)
-        .collection("mesevenements")
+        .collection("MesEvenements")
         .snapshots()
         .map(listEvent);
   }

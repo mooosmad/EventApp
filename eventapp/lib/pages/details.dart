@@ -78,7 +78,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    height: 300,
+                    height: 280,
                   ),
                 ),
               );
