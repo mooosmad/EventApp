@@ -7,6 +7,7 @@ import 'package:eventapp/common/loading.dart';
 import 'package:eventapp/pages/addEvent.dart';
 import 'package:eventapp/services/firestore/evenement.dart';
 import 'package:eventapp/services/firestore/gestionEvent.dart';
+import 'package:eventapp/services/shareUrl/shareUrl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -180,136 +181,161 @@ class _HomeState extends State<Pagehome> {
       barrierColor: Colors.transparent,
       isScrollControlled: true,
       builder: (context) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.92,
-          margin: const EdgeInsets.symmetric(vertical: 2),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 20.0,
-                sigmaY: 20.0,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white10,
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(
-                    color: Colors.black26,
-                    width: 0.5,
+        return Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.92,
+              margin: const EdgeInsets.symmetric(vertical: 2),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 20.0,
+                    sigmaY: 20.0,
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Center(
-                      child: FractionallySizedBox(
-                        widthFactor: 0.10,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 8,
-                          ),
-                          height: 4,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(2),
-                            // border: Border.all(
-                            //   color: Colors.black12,
-                            //   width: 0.5,
-                            // ),
-                          ),
-                        ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(
+                        color: Colors.black26,
+                        width: 0.5,
                       ),
                     ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 20,
+                    child: Column(
+                      children: [
+                        Center(
+                          child: FractionallySizedBox(
+                            widthFactor: 0.10,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 8,
+                              ),
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(2),
+                                // border: Border.all(
+                                //   color: Colors.black12,
+                                //   width: 0.5,
+                                // ),
+                              ),
+                            ),
+                          ),
                         ),
-                        child: ListView(
-                          physics: BouncingScrollPhysics(),
-                          children: [
-                            Text(
-                              "Titre :",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 20,
                             ),
-                            SizedBox(height: 10),
-                            Text(
-                              evenement.nom!,
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
+                            child: ListView(
+                              physics: BouncingScrollPhysics(),
+                              children: [
+                                Text(
+                                  "Titre :",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  evenement.nom!,
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  "Description : ",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  evenement.nom!,
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  "Date de début de l'évènement : ",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  evenement.dateDebut!,
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  "Date de fin de l'évènement : ",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  evenement.dateFin!,
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 20),
-                            Text(
-                              "Description : ",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              evenement.nom!,
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              "Date de début de l'évènement : ",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              evenement.dateDebut!,
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              "Date de fin de l'évènement : ",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              evenement.dateFin!,
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
+            Positioned(
+              child: GestureDetector(
+                onTap: () {
+                  ShareUrl().sendUrl();
+                },
+                child: Container(
+                  padding: EdgeInsets.all(9),
+                  margin: EdgeInsets.all(9),
+                  decoration: BoxDecoration(
+                    color: getColor(evenement.color!),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.share,
+                    color: Colors.white.withOpacity(0.9),
+                  ),
+                ),
+              ),
+              right: 0,
+              bottom: 10,
+            ),
+          ],
         );
       },
     );
