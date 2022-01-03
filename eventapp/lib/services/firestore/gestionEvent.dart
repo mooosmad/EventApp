@@ -39,6 +39,7 @@ class GestionEvent {
     return eventCollection
         .doc(uid)
         .collection("MesEvenements")
+        .orderBy("date de creation", descending: true)
         .snapshots()
         .map(listEvent);
   }

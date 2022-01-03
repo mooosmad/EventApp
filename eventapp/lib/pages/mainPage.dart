@@ -2,7 +2,7 @@
 
 import 'dart:ui';
 
-import 'package:eventapp/pages/details.dart';
+import 'package:eventapp/pages/eventFriends.dart';
 import 'package:eventapp/pages/home.dart';
 import 'package:eventapp/pages/setting.dart';
 import 'package:eventapp/widget/bottombar.dart';

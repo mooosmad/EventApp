@@ -5,6 +5,7 @@ class Evenement {
   String? description;
   String? urlDescription;
   String? color;
+  String? dateCreation;
   Evenement({
     this.dateDebut,
     this.description,
@@ -12,6 +13,7 @@ class Evenement {
     this.urlDescription,
     this.dateFin,
     this.color,
+    this.dateCreation,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,7 @@ class Evenement {
       "description": description,
       "urlDescription": urlDescription,
       "color": color,
+      "date de creation": dateCreation
     };
   }
   // factory  fromMap

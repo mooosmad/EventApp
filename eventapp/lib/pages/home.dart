@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
 import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventapp/common/constant.dart';
 import 'package:eventapp/common/loading.dart';
 import 'package:eventapp/pages/addEvent.dart';
@@ -21,7 +20,7 @@ class Pagehome extends StatefulWidget {
 }
 
 class _HomeState extends State<Pagehome> {
-  getColor(String colorEvent) {
+  Color getColor(String colorEvent) {
     if (colorEvent == "red") {
       return Colors.red;
     } else if (colorEvent == "blue") {
@@ -62,9 +61,6 @@ class _HomeState extends State<Pagehome> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         final res = snapshot.data;
-
-                        print(res);
-
                         return res!.isEmpty
                             ? Center(
                                 child: Text(
@@ -78,7 +74,6 @@ class _HomeState extends State<Pagehome> {
                                 ),
                               )
                             : ListView.builder(
-                                // key: PageStorageKey<String>("pageTwo"),
                                 physics: BouncingScrollPhysics(),
                                 itemCount: res.length,
                                 itemBuilder: (BuildContext context, index) {
@@ -233,77 +228,52 @@ class _HomeState extends State<Pagehome> {
                             child: ListView(
                               physics: BouncingScrollPhysics(),
                               children: [
-                                Text(
-                                  "Titre :",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
-                                  ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    informationContainer(
+                                        date: evenement.dateDebut,
+                                        titre: "Debut"),
+                                    informationContainer(
+                                      date: evenement.dateFin,
+                                      titre: "Fin",
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 10),
-                                Text(
-                                  evenement.nom!,
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.8),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
+                                Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 10,
                                   ),
-                                ),
-                                SizedBox(height: 20),
-                                Text(
-                                  "Description : ",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.72),
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  evenement.nom!,
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.8),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                SizedBox(height: 20),
-                                Text(
-                                  "Date de début de l'évènement : ",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  evenement.dateDebut!,
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.8),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        evenement.nom!,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text(
+                                        evenement.description!,
+                                        style: TextStyle(
+                                          color: Colors.white.withOpacity(0.8),
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(height: 20),
-                                Text(
-                                  "Date de fin de l'évènement : ",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  evenement.dateFin!,
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.8),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                  ),
-                                ),
                               ],
                             ),
                           ),
@@ -395,6 +365,48 @@ class _HomeState extends State<Pagehome> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  informationContainer({String? date, String? titre}) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: 9,
+        horizontal: 5,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.72),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      width: 150,
+      height: 150,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            titre!,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          ),
+          Icon(
+            Icons.calendar_today_rounded,
+            color: Colors.white70,
+            size: 30,
+          ),
+          Text(
+            date!,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.9),
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+            ),
+          ),
+        ],
       ),
     );
   }

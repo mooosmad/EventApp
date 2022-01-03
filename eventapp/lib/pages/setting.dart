@@ -6,6 +6,7 @@ import 'package:eventapp/common/loading.dart';
 import 'package:eventapp/conins/conIns.dart';
 import 'package:eventapp/pages/profiles.dart';
 import 'package:eventapp/services/authentification/authentification.dart';
+import 'package:eventapp/widget/dialoglogout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
@@ -168,29 +169,14 @@ class _SettingState extends State<Setting> {
         barrierDismissible: true,
         context: context,
         builder: (context) {
-          return CupertinoAlertDialog(
-            title: Text("Déconnexion"),
-            content: Text("Voulez-vous vraiment vous déconnectez?"),
-            actions: [
-              CupertinoDialogAction(
-                isDestructiveAction: true,
-                child: Text("oui"),
-                onPressed: () {
-                  authentification.signOut();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return ConIns();
-                  }));
-                },
-              ),
-              CupertinoDialogAction(
-                isDefaultAction: true,
-                child: Text("non"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+          return DialogLogOut(
+            deconnexion: () {
+              authentification.signOut();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return ConIns();
+              }));
+            },
           );
         });
   }

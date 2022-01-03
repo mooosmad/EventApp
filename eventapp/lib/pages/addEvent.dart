@@ -6,6 +6,7 @@ import 'package:eventapp/common/constant.dart';
 import 'package:date_format/date_format.dart';
 import 'package:eventapp/services/firestore/evenement.dart';
 import 'package:eventapp/services/firestore/gestionEvent.dart';
+import 'package:eventapp/widget/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
@@ -73,6 +74,7 @@ class _AddEventState extends State<AddEvent> {
               nom: titre,
               urlDescription: "",
               color: colorEvent,
+              dateCreation: DateTime.now().millisecondsSinceEpoch.toString(),
             );
             gestionEvent!.addEvent(evenement);
             Fluttertoast.showToast(msg: "Evènement créé avec succès");
@@ -80,18 +82,14 @@ class _AddEventState extends State<AddEvent> {
           } else {
             showCupertinoDialog(
                 context: context,
+                barrierDismissible: true,
                 builder: (context) {
-                  return CupertinoAlertDialog(
-                    title: Text("Impossible"),
-                    content: Text("Veillez remplir les champs obligatoires"),
-                    actions: [
-                      CupertinoDialogAction(
-                        child: Text("Compris"),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
+                  return MyDialog(
+                    titre: "Impossible",
+                    description: "Veillez remplir les champs obligatoires",
+                    boutton: "Compris !",
+                    niveau: Niveau.ERROR,
+                    onpress: () {},
                   );
                 });
           }
@@ -309,17 +307,14 @@ class _AddEventState extends State<AddEvent> {
                     showCupertinoDialog(
                       context: context,
                       builder: (context) {
-                        return CupertinoAlertDialog(
-                          title: Text("Incorrect"),
-                          content: Text("Veillez choisir une plage de date"),
-                          actions: [
-                            CupertinoDialogAction(
-                              child: Text("Compris"),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            )
-                          ],
+                        return MyDialog(
+                          titre: "Incorrect",
+                          description: "Veillez choisir une plage de date",
+                          boutton: "Compris !",
+                          niveau: Niveau.ERROR,
+                          onpress: () {
+                            Navigator.pop(context);
+                          },
                         );
                       },
                     );
@@ -332,11 +327,3 @@ class _AddEventState extends State<AddEvent> {
         });
   }
 }
-
-// SfDateRangePicker(
-//           selectionMode: DateRangePickerSelectionMode.range,
-//           onSelectionChanged: (arg) {
-//             print(arg.value);
-//           },
-//           backgroundColor: Colors.white,
-//         ),

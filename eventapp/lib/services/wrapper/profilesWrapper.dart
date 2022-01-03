@@ -3,6 +3,7 @@
 import 'package:eventapp/common/constant.dart';
 import 'package:eventapp/pages/mainPage.dart';
 import 'package:eventapp/pages/profiles.dart';
+import 'package:eventapp/widget/dialogProfileWrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
@@ -27,37 +28,25 @@ class _ProfileWrapperState extends State<ProfileWrapper> {
             builder: (context) {
               return WillPopScope(
                 onWillPop: () async => false,
-                child: CupertinoAlertDialog(
-                  title: Text("Inscription Effectué"),
-                  content: Text(
-                    "Voulez-vous remplir votre profile ou vous le ferez plutard",
-                  ),
-                  actions: [
-                    CupertinoDialogAction(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return Profiles(user: widget.user);
-                          }),
-                          (route) => false,
-                        );
-                      },
-                      child: Text("oui"),
-                    ),
-                    CupertinoDialogAction(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return MainPage(user: widget.user);
-                          }),
-                          (route) => false,
-                        );
-                      },
-                      child: Text("Non, plutard"),
-                    ),
-                  ],
+                child: DialogProfileWrapp(
+                  maintenantFunction: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return Profiles(user: widget.user);
+                      }),
+                      (route) => false,
+                    );
+                  },
+                  plutardFunction: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return MainPage(user: widget.user);
+                      }),
+                      (route) => false,
+                    );
+                  },
                 ),
               );
             });
