@@ -7,7 +7,9 @@ import 'package:eventapp/pages/home.dart';
 import 'package:eventapp/pages/setting.dart';
 import 'package:eventapp/widget/bottombar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import "package:flutter/material.dart";
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MainPage extends StatefulWidget {
   final User? user;
@@ -29,6 +31,51 @@ class _MainPageState extends State<MainPage> {
     Setting(),
   ];
 
+  getLinkifApp() async {
+    // if app is in ackground
+
+    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
+      if (widget.user!.uid != dynamicLinkData.link.queryParameters["uid"]) {
+        Navigator.pushNamed(
+          context,
+          dynamicLinkData.link.path,
+          arguments: {
+            "uid": dynamicLinkData.link.queryParameters["uid"],
+            "date de creation":
+                dynamicLinkData.link.queryParameters["dateCreation"],
+          },
+        );
+      }
+    }).onError((error) {
+      print("error");
+    });
+
+    // if link open app
+
+    PendingDynamicLinkData? pendingDynamicLinkData =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri? deepLink = pendingDynamicLinkData!.link;
+    // une petite erreur de null safety ici mais c'est normale car au lancement normal on n'utilise pas de link
+    if (deepLink != null) {
+      print("existe");
+      if (deepLink.queryParameters["uid"] != widget.user!.uid) {
+        Navigator.pushNamed(
+          context,
+          deepLink.path,
+          arguments: {
+            "uid": deepLink.queryParameters["uid"],
+            "date de creation": deepLink.queryParameters["dateCreation"],
+          },
+        );
+      }
+      if (widget.user!.uid == deepLink.queryParameters["uid"]) {
+        Fluttertoast.showToast(msg: "Vous êtes le createur de cet évènement");
+      }
+    } else {
+      print("LINK NULL");
+    }
+  }
+
   @override
   void initState() {
     pages[0] = Pagehome(
@@ -37,6 +84,8 @@ class _MainPageState extends State<MainPage> {
     pages[2] = Setting(
       user: widget.user,
     );
+
+    getLinkifApp();
 
     super.initState();
   }

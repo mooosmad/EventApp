@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:eventapp/redirectionPage/acceptInvitaion.dart';
 import 'package:eventapp/services/wrapper/authWrapper.dart';
 import "package:firebase_core/firebase_core.dart";
 import 'package:flutter/material.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: Profiles(),
       home: AuthWrapper(),
+      routes: {
+        "/invitationPage": (context) => AcceptInvitaion(),
+      },
     );
   }
 }

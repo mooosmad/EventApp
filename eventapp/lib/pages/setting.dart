@@ -172,6 +172,7 @@ class _SettingState extends State<Setting> {
           return DialogLogOut(
             deconnexion: () {
               authentification.signOut();
+              Navigator.pop(context);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) {
                 return ConIns();

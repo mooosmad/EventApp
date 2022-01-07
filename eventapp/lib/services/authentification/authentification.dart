@@ -68,12 +68,6 @@ class Authentification {
       print(e.toString());
       Fluttertoast.showToast(
         msg: e.toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0,
       );
       return null;
     }

@@ -1,13 +1,16 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
 
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventapp/common/constant.dart';
 import 'package:eventapp/common/loading.dart';
 import 'package:eventapp/pages/addEvent.dart';
 import 'package:eventapp/services/firestore/evenement.dart';
 import 'package:eventapp/services/firestore/gestionEvent.dart';
+import 'package:eventapp/services/firestore/message.dart';
 import 'package:eventapp/services/shareUrl/shareUrl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -274,6 +277,43 @@ class _HomeState extends State<Pagehome> {
                                   ),
                                 ),
                                 SizedBox(height: 20),
+                                GestureDetector(
+                                  onTap: () async {
+                                    print(evenement.dateCreation);
+                                    FirebaseFirestore.instance
+                                        .collection("Evenements")
+                                        .doc(widget.user!.uid)
+                                        .collection("MesEvenements")
+                                        .doc(evenement.dateCreation)
+                                        .collection(
+                                          "Messages",
+                                        )
+                                        .doc(
+                                          DateTime.now()
+                                              .millisecondsSinceEpoch
+                                              .toString(),
+                                        )
+                                        .set({"name": "hello"});
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: Colors.teal,
+                                    ),
+                                    width: double.infinity,
+                                    child: Center(
+                                      child: Text(
+                                        "Rejoindre l'espace",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -287,7 +327,8 @@ class _HomeState extends State<Pagehome> {
             Positioned(
               child: GestureDetector(
                 onTap: () {
-                  ShareUrl().sendUrl();
+                  ShareUrl(uid: widget.user!.uid, evenement: evenement)
+                      .sendUrl();
                 },
                 child: Container(
                   padding: EdgeInsets.all(9),

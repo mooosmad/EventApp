@@ -140,7 +140,7 @@ class _LoginState extends State<Login> {
                               });
                             }
                           } else {
-                            print("no compketed");
+                            print("no completed");
                           }
                         },
                         child: Container(

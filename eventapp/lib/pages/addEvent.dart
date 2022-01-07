@@ -67,6 +67,9 @@ class _AddEventState extends State<AddEvent> {
               gestionEvent = GestionEvent(uid: widget.user!.uid);
             });
 
+            String dateCreation =
+                DateTime.now().millisecondsSinceEpoch.toString();
+
             Evenement evenement = Evenement(
               dateDebut: dateDebut.toString(),
               dateFin: dateFin.toString(),
@@ -74,9 +77,9 @@ class _AddEventState extends State<AddEvent> {
               nom: titre,
               urlDescription: "",
               color: colorEvent,
-              dateCreation: DateTime.now().millisecondsSinceEpoch.toString(),
+              dateCreation: dateCreation,
             );
-            gestionEvent!.addEvent(evenement);
+            gestionEvent!.addEvent(evenement, dateCreation);
             Fluttertoast.showToast(msg: "Evènement créé avec succès");
             Navigator.pop(context);
           } else {

@@ -2,6 +2,7 @@
 
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:eventapp/services/firestore/evenement.dart';
+import 'package:eventapp/services/firestore/message.dart';
 
 class GestionEvent {
   final String? uid;
@@ -10,16 +11,33 @@ class GestionEvent {
   CollectionReference eventCollection =
       FirebaseFirestore.instance.collection("Evenements");
 
-  addEvent(Evenement evenement) {
+  addEvent(Evenement evenement,String docName) {
     eventCollection
         .doc(uid)
         .collection("MesEvenements")
         .doc(
-          DateTime.now().millisecondsSinceEpoch.toString(),
+          docName
         )
         .set(
           evenement.toMap(),
         );
+  }
+
+  messageEvent(Message message, String docName) {
+    DocumentReference documentReference = eventCollection
+        .doc(uid)
+        .collection("MesEvenements")
+        .doc(docName)
+        .collection("Messages")
+        .doc(
+          DateTime.now().millisecondsSinceEpoch.toString(),
+        );
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      transaction.set(
+        documentReference,
+        message.toMap(),
+      );
+    });
   }
 
   List<Evenement> listEvent(QuerySnapshot querySnapshot) {
@@ -31,6 +49,7 @@ class GestionEvent {
         nom: (doc.data() as dynamic)["nomEvenement"],
         urlDescription: (doc.data() as dynamic)["urlDescription"],
         color: (doc.data() as dynamic)["color"],
+        dateCreation: (doc.data() as dynamic)["date de creation"],
       );
     }).toList();
   }
